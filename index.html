@@ -47,48 +47,52 @@
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
   <script>
-    /* PARTICLE CONFIG */
-    particlesJS("particles-js",{
-      particles:{
-        number:{value:60},
-        color:{value:"#38bdf8"},
-        shape:{type:"circle"},
-        opacity:{value:0.5},
-        size:{value:3},
-        move:{speed:2}
-      }
-    });
-
-    /* RIPPLE */
-    function rippleEffect(e){
-      const btn = e.currentTarget;
-      const circle = document.createElement("span");
-      circle.className = "ripple-circle";
-      const rect = btn.getBoundingClientRect();
-      circle.style.left = e.clientX - rect.left + "px";
-      circle.style.top = e.clientY - rect.top + "px";
-      btn.appendChild(circle);
-      setTimeout(()=>circle.remove(),600);
+  /* PARTICLE */
+  particlesJS("particles-js",{
+    particles:{
+      number:{value:60},
+      color:{value:"#38bdf8"},
+      shape:{type:"circle"},
+      opacity:{value:0.5},
+      size:{value:3},
+      move:{speed:2}
     }
+  });
 
-    function openLink(e,url){
-      rippleEffect(e);
-      setTimeout(()=>window.open(url,"_blank"),300);
+  const music = document.getElementById("bgMusic");
+  let musicStarted = false;
+
+  function rippleEffect(e){
+    const btn = e.currentTarget;
+    const circle = document.createElement("span");
+    circle.className = "ripple-circle";
+    const rect = btn.getBoundingClientRect();
+    circle.style.left = e.clientX - rect.left + "px";
+    circle.style.top = e.clientY - rect.top + "px";
+    btn.appendChild(circle);
+    setTimeout(()=>circle.remove(),600);
+  }
+
+  function startMusic(){
+    if(!musicStarted){
+      music.play();
+      musicStarted = true;
     }
+  }
 
-    /* MUSIC */
-    const music = document.getElementById("bgMusic");
-    let playing = false;
+  function openLink(e, url){
+    rippleEffect(e);
+    startMusic(); // 🔥 MUSIK AUTO NYALA
+    setTimeout(()=>window.open(url,"_blank"),300);
+  }
 
-    function toggleMusic(){
-      if(!playing){
-        music.play();
-        playing = true;
-      } else {
-        music.pause();
-        playing = false;
-      }
+  function toggleMusic(){
+    if(music.paused){
+      music.play();
+    }else{
+      music.pause();
     }
+  }
   </script>
 
 </body>
