@@ -1,15 +1,18 @@
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
   font-family:Arial, sans-serif;
   background:#020617;
   overflow:hidden;
+
+  display:flex;
+  justify-content:center;   /* tengah horizontal */
+  align-items:center;       /* tengah vertikal */
+  height:100vh;
 }
 
-/* PARTICLE */
+/* PARTICLES */
 #particles-js{
   position:fixed;
   width:100%;
@@ -17,36 +20,45 @@ body{
   z-index:-1;
 }
 
-/* MUSIC BUTTON */
-.music-btn{
+/* MUSIC CONTROL */
+.music-control{
   position:fixed;
   top:20px;
   right:20px;
+  display:flex;
+  gap:10px;
+  z-index:10;
+}
+
+.music-control button{
   background:#38bdf8;
   border:none;
   padding:12px;
   border-radius:50%;
   cursor:pointer;
-  z-index:10;
+}
+
+.music-control input{
+  width:100px;
 }
 
 /* CARD */
 .card{
-  width:330px;
+  width:430px;              /* 👉 lebih gede */
+  min-height:560px;         /* 👉 tinggi card */
   background:#020617;
-  padding:25px;
-  border-radius:20px;
-  color:white;
+  padding:30px;
+  border-radius:26px;
   text-align:center;
-  margin:auto;
-  margin-top:80px;
-  box-shadow:0 20px 50px rgba(0,0,0,.8);
-  animation:cardIn 1s ease;
+  color:white;
+  box-shadow:0 25px 70px rgba(0,0,0,.9);
+
+  animation:spawn 1s ease;
 }
 
-@keyframes cardIn{
-  from{opacity:0;transform:scale(.8) translateY(40px);}
-  to{opacity:1;transform:scale(1) translateY(0);}
+@keyframes spawn{
+  from{opacity:0;transform:scale(.7) translateY(50px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
 }
 
 .avatar{
@@ -68,35 +80,32 @@ body{
   display:flex;
   align-items:center;
   gap:12px;
-  padding:12px 16px;
-  margin:10px 0;
-  border-radius:14px;
+  padding:14px 16px;
+  margin:12px 0;
+  border-radius:16px;
   font-weight:bold;
   cursor:pointer;
   transition:.3s;
 }
 
-.btn span{
-  flex:1;
-  text-align:left;
-}
+.btn span{flex:1;text-align:left}
 
 .btn:hover{
-  transform:translateY(-6px) scale(1.03);
+  transform:translateY(-6px) scale(1.05);
 }
 
 /* COLORS */
-.wa{background:#25D366;}
-.ig{background:#E1306C;}
-.dc{background:#5865F2;}
-.tt{background:#000;}
+.wa{background:#25D366}
+.ig{background:#E1306C}
+.dc{background:#5865F2}
+.tt{background:#000}
 
 /* RIPPLE */
-.ripple-circle{
+.ripple{
   position:absolute;
   width:20px;
   height:20px;
-  background:rgba(255,255,255,.6);
+  background:rgba(255,255,255,.7);
   border-radius:50%;
   transform:translate(-50%,-50%);
   animation:ripple .6s linear;
@@ -104,8 +113,8 @@ body{
 
 @keyframes ripple{
   to{
-    width:300px;
-    height:300px;
+    width:350px;
+    height:350px;
     opacity:0;
   }
 }
