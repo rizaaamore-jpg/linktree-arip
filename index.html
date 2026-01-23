@@ -12,33 +12,39 @@
 </head>
 <body>
 
-  <!-- PARTICLE -->
+  <!-- PARTICLES -->
   <div id="particles-js"></div>
 
-  <!-- MUSIC -->
+  <!-- AUDIO -->
   <audio id="bgMusic" src="music.mp3" loop></audio>
-  <button class="music-btn" onclick="toggleMusic()">
-    <i class="fas fa-music"></i>
-  </button>
 
+  <!-- MUSIC CONTROL -->
+  <div class="music-control">
+    <button onclick="toggleMusic()">
+      <i id="musicIcon" class="fas fa-play"></i>
+    </button>
+    <input type="range" min="0" max="1" step="0.01" id="volume">
+  </div>
+
+  <!-- CARD -->
   <div class="card">
-    <img src="img/foto.jpg" class="avatar">
+    <img src="foto.jpg" alt="avatar">
     <h2>Rizaa Amore</h2>
-    <p class="bio">SMK | Future Developer 🚀</p>
+    <p class="bio">SMK | GOD LEVEL DEVELOPER ⚡</p>
 
-    <a class="btn wa ripple" onclick="openLink(event,'https://wa.me/6281932999602')">
+    <a class="btn wa" onclick="openLink(event,'https://wa.me/6281932999602')">
       <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
     </a>
 
-    <a class="btn ig ripple" onclick="openLink(event,'https://instagram.com/zyraxx_18')">
+    <a class="btn ig" onclick="openLink(event,'https://instagram.com/zyraxx_18')">
       <i class="fab fa-instagram"></i><span>Instagram</span>
     </a>
 
-    <a class="btn dc ripple" onclick="openLink(event,'https://discord.gg/JYpknSBdA9')">
+    <a class="btn dc" onclick="openLink(event,'https://discord.gg/JYpknSBdA9')">
       <i class="fab fa-discord"></i><span>Discord</span>
     </a>
 
-    <a class="btn tt ripple" onclick="openLink(event,'https://www.tiktok.com/@screett_gtwl')">
+    <a class="btn tt" onclick="openLink(event,'https://www.tiktok.com/@screett_gtwl')">
       <i class="fab fa-tiktok"></i><span>TikTok</span>
     </a>
   </div>
@@ -47,52 +53,82 @@
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
   <script>
-  /* PARTICLE */
-  particlesJS("particles-js",{
-    particles:{
-      number:{value:60},
-      color:{value:"#38bdf8"},
-      shape:{type:"circle"},
-      opacity:{value:0.5},
-      size:{value:3},
-      move:{speed:2}
-    }
-  });
+    /* PARTICLES */
+    particlesJS("particles-js",{
+      particles:{
+        number:{value:70},
+        color:{value:"#38bdf8"},
+        opacity:{value:0.6},
+        size:{value:3},
+        move:{speed:2}
+      }
+    });
 
-  const music = document.getElementById("bgMusic");
-  let musicStarted = false;
+    const music = document.getElementById("bgMusic");
+    const icon  = document.getElementById("musicIcon");
+    const volume= document.getElementById("volume");
 
-  function rippleEffect(e){
-    const btn = e.currentTarget;
-    const circle = document.createElement("span");
-    circle.className = "ripple-circle";
-    const rect = btn.getBoundingClientRect();
-    circle.style.left = e.clientX - rect.left + "px";
-    circle.style.top = e.clientY - rect.top + "px";
-    btn.appendChild(circle);
-    setTimeout(()=>circle.remove(),600);
-  }
+    /* LOAD SAVED STATE */
+    music.volume = localStorage.getItem("volume") || 0.5;
+    volume.value = music.volume;
 
-  function startMusic(){
-    if(!musicStarted){
+    let started = false;
+
+    function fadeIn(){
+      let v = 0;
+      music.volume = 0;
       music.play();
-      musicStarted = true;
+      icon.className = "fas fa-pause";
+      const i = setInterval(()=>{
+        if(v < volume.value){
+          v += 0.02;
+          music.volume = v;
+        } else clearInterval(i);
+      },50);
     }
-  }
 
-  function openLink(e, url){
-    rippleEffect(e);
-    startMusic(); // 🔥 MUSIK AUTO NYALA
-    setTimeout(()=>window.open(url,"_blank"),300);
-  }
-
-  function toggleMusic(){
-    if(music.paused){
-      music.play();
-    }else{
-      music.pause();
+    function fadeOut(){
+      let v = music.volume;
+      const o = setInterval(()=>{
+        if(v > 0){
+          v -= 0.02;
+          music.volume = v;
+        } else{
+          music.pause();
+          icon.className = "fas fa-play";
+          clearInterval(o);
+        }
+      },50);
     }
-  }
+
+    function toggleMusic(){
+      if(music.paused) fadeIn();
+      else fadeOut();
+    }
+
+    volume.oninput = ()=>{
+      music.volume = volume.value;
+      localStorage.setItem("volume", volume.value);
+    };
+
+    function ripple(e){
+      const c = document.createElement("span");
+      c.className = "ripple";
+      const r = e.currentTarget.getBoundingClientRect();
+      c.style.left = e.clientX - r.left + "px";
+      c.style.top  = e.clientY - r.top  + "px";
+      e.currentTarget.appendChild(c);
+      setTimeout(()=>c.remove(),600);
+    }
+
+    function openLink(e,url){
+      ripple(e);
+      if(!started){
+        fadeIn();
+        started = true;
+      }
+      setTimeout(()=>window.open(url,"_blank"),300);
+    }
   </script>
 
 </body>
