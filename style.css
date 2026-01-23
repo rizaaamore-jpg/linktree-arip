@@ -1,0 +1,66 @@
+body {
+  background: linear-gradient(135deg, #020617, #0f172a);
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.card {
+  background: #020617;
+  width: 330px;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+  color: white;
+  text-align: center;
+}
+
+.avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid #38bdf8;
+  margin-bottom: 10px;
+}
+
+.bio {
+  font-size: 14px;
+  color: #94a3b8;
+  margin-bottom: 20px;
+}
+
+/* BUTTON LINKTREE */
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn i {
+  font-size: 18px;
+}
+
+.btn span {
+  flex: 1;
+  text-align: left;
+}
+
+/* Warna */
+.wa { background: #25D366; }
+.ig { background: #E1306C; }
+.dc { background: #5865F2; }
+.tt { background: #000000; }
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
