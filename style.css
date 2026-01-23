@@ -62,10 +62,11 @@ body{
 }
 
 .avatar{
-  width:70px;
+  width:70px;          /* sebelumnya 90px */
   height:70px;
   border-radius:50%;
-  border:3px solid #38bdf8;
+  border:2px solid #38bdf8;
+  margin-bottom:8px;
 }
 
 .bio{
