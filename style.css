@@ -44,7 +44,7 @@ body{
 
 /* CARD */
 .card{
-  width:430px;              /* 👉 lebih gede */
+  width:380px;              /* 👉 lebih gede */
   min-height:560px;         /* 👉 tinggi card */
   background:#020617;
   padding:30px;
