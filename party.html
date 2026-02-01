@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🎊 Virtual Birthday Party</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .party-page {
+            background: linear-gradient(135deg, #f0f8ff 0%, #fff0f8 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .party-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease;
+        }
+        
+        .party-title {
+            text-align: center;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #ff6bcb, #6bcbff, #ffde59);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="party-page">
+    <!-- Navigation -->
+    <nav class="page-nav">
+        <div class="nav-indicator">
+            <div class="indicator-dot" data-page="home" onclick="goToPage('home.html')"></div>
+            <div class="indicator-dot" data-page="surprise" onclick="goToPage('surprise.html')"></div>
+            <div class="indicator-dot" data-page="wishes" onclick="goToPage('wishes.html')"></div>
+            <div class="indicator-dot" data-page="gallery" onclick="goToPage('gallery.html')"></div>
+            <div class="indicator-dot active" data-page="party"></div>
+        </div>
+        
+        <div class="nav-controls">
+            <button class="nav-btn prev-btn" onclick="goToPage('gallery.html')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="page-counter">Page 5 of 5</span>
+            <button class="nav-btn next-btn disabled">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="page-content">
+        <div class="party-container">
+            <h1 class="party-title">
+                <i class="fas fa-glass-cheers"></i> VIRTUAL BIRTHDAY PARTY! <i class="fas fa-glass-cheers"></i>
+            </h1>
+            <p class="party-subtitle" style="text-align: center; color: #666; margin-bottom: 30px;">
+                Bergabunglah dalam pesta virtual yang meriah! 🎊
+            </p>
+            
+            <div class="party-info-section">
+                <div class="party-card main-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-crown"></i> PESTA UTAMA</h3>
+                        <div class="party-status active">LIVE NOW</div>
+                    </div>
+                    
+                    <div class="party-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <div>
+                                <strong>Tanggal:</strong>
+                                <span>15 Desember 2024</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Waktu:</strong>
+                                <span>19:00 - 21:00 WIB</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-video"></i>
+                            <div>
+                                <strong>Platform:</strong>
+                                <span>Zoom Meeting</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <strong>Tamut:</strong>
+                                <span>50+ Orang</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="party-actions">
+                        <button class="action-btn join-btn" onclick="joinParty()">
+                            <i class="fas fa-video"></i> Join Party Now!
+                        </button>
+                        <button class="action-btn share-btn" onclick="shareParty()">
+                            <i class="fas fa-share-alt"></i> Share Invitation
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="party-activities">
+                    <h3><i class="fas fa-gamepad"></i> Aktivitas Pesta</h3>
+                    <div class="activities-grid">
+                        <div class="activity-card" data-activity="games">
+                            <div class="activity-icon">🎮</div>
+                            <h4>Games & Quiz</h4>
+                            <p>Kompetisi seru dengan hadiah menarik!</p>
+                            <button class="activity-btn" onclick="startActivity('games')">
+                                Join Game
+                            </button>
+                        </div>
+                        <div class="activity-card" data-activity="karaoke">
+                            <div class="activity-icon">🎤</div>
+                            <h4>Karaoke Session</h4>
+                            <p>Nyanyi bersama lagu-lagu favorit!</p>
+                            <button class="activity-btn" onclick="startActivity('karaoke')">
+                                Start Singing
+                            </button>
+                        </div>
+                        <div class="activity-card" data-activity="cake">
+                            <div class="activity-icon">🎂</div>
+                            <h4>Cake Cutting</h4>
+                            <p>Potong kue virtual bersama-sama!</p>
+                            <button class="activity-btn" onclick="startActivity('cake')">
+                                Cut Cake
+                            </button>
+                        </div>
+                        <div class="activity-card" data-activity="gifts">
+                            <div class="activity-icon">🎁</div>
+                            <h4>Gift Opening</h4>
+                            <p>Buka hadiah virtual secara live!</p>
+                            <button class="activity-btn" onclick="startActivity('gifts')">
+                                Open Gifts
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="party-participants">
+                <h3><i class="fas fa-user-friends"></i> Yang Sudah Bergabung</h3>
+                <div class="participants-list" id="participantsList">
+                    <!-- Participants will be loaded here -->
+                </div>
+                
+                <div class="add-participant">
+                    <input type="text" id="participantName" placeholder="Tambahkan namamu...">
+                    <button class="add-btn" onclick="addParticipant()">
+                        <i class="fas fa-plus"></i> Join
+                    </button
