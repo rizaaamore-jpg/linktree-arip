@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🎁 Birthday Surprises!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .surprise-page {
+            background: linear-gradient(135deg, #f0f8ff 0%, #fff0f8 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .surprise-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ff6bcb;
+            text-shadow: 2px 2px 0 #ffde59;
+        }
+    </style>
+</head>
+<body class="surprise-page">
+    <!-- Navigation -->
+    <nav class="page-nav">
+        <div class="nav-indicator">
+            <div class="indicator-dot" data-page="home" onclick="goToPage('home.html')"></div>
+            <div class="indicator-dot active" data-page="surprise"></div>
+            <div class="indicator-dot" data-page="wishes" onclick="goToPage('wishes.html')"></div>
+            <div class="indicator-dot" data-page="gallery" onclick="goToPage('gallery.html')"></div>
+            <div class="indicator-dot" data-page="party" onclick="goToPage('party.html')"></div>
+        </div>
+        
+        <div class="nav-controls">
+            <button class="nav-btn prev-btn" onclick="goToPage('home.html')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="page-counter">Page 2 of 5</span>
+            <button class="nav-btn next-btn" onclick="goToPage('wishes.html')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="page-content">
+        <div class="surprise-container">
+            <h1 class="surprise-title">
+                <i class="fas fa-gift"></i> SURPRISE BOX! <i class="fas fa-gift"></i>
+            </h1>
+            
+            <div class="surprise-intro">
+                <p>Buka kejutan spesial yang sudah disiapkan untukmu!</p>
+                <p class="hint-text"><i class="fas fa-lightbulb"></i> Klik pada kotak hadiah untuk membuka!</p>
+            </div>
+            
+            <div class="gift-box-container">
+                <div class="gift-box" id="mainGiftBox">
+                    <div class="box-top">
+                        <div class="ribbon"></div>
+                        <div class="bow">
+                            <div class="bow-center"></div>
+                            <div class="bow-loop left"></div>
+                            <div class="bow-loop right"></div>
+                        </div>
+                    </div>
+                    <div class="box-bottom">
+                        <div class="box-shadow"></div>
+                    </div>
+                    <div class="box-label">BUKA AKU!</div>
+                </div>
+                
+                <div class="gift-particles">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+            </div>
+            
+            <div class="surprise-grid">
+                <div class="surprise-card" data-surprise="message">
+                    <div class="card-icon">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                    <h3>Surat Rahasia</h3>
+                    <p>Baca pesan rahasia dari seseorang yang spesial</p>
+                    <button class="surprise-action" onclick="openSurprise('message')">
+                        Buka <i class="fas fa-lock-open"></i>
+                    </button>
+                </div>
+                
+                <div class="surprise-card" data-surprise="memory">
+                    <div class="card-icon">
+                        <i class="fas fa-photo-video"></i>
+                    </div>
+                    <h3>Kenangan Indah</h3>
+                    <p>Lihat koleksi momen-momen berharga</p>
+                    <button class="surprise-action" onclick="openSurprise('memory')">
+                        Lihat <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                
+                <div class="surprise-card" data-surprise="wish">
+                    <div class="card-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Permohonan Ajaib</h3>
+                    <p>Dapatkan 3 permohonan spesial hari ini!</p>
+                    <button class="surprise-action" onclick="openSurprise('wish')">
+                        Minta <i class="fas fa-wand-magic-sparkles"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="opened-surprises" id="openedSurprises">
+                <!-- Surprises will appear here when opened -->
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal untuk Surprise -->
+    <div class="surprise-modal" id="surpriseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Surprise!</h3>
+                <button class="close-modal" onclick="closeSurpriseModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" onclick="closeSurpriseModal()">
+                    Tutup <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="confetti.js"></script>
+    <script>
+        // Gift box interaction
+        const giftBox = document.getElementById('mainGiftBox');
+        let isOpened = false;
+        
+        giftBox.addEventListener('click', function() {
+            if (!isOpened) {
+                openGiftBox();
+                isOpened = true;
+            }
+        });
+        
+        function openGiftBox() {
+            giftBox.classList.add('opening');
+            
+            // Animation
+            setTimeout(() => {
+                giftBox.classList.add('opened');
+                
+                // Show confetti
+                createConfetti(200);
+                
+                // Show surprise message
+                showSurpriseMessage();
+                
+                // Play sound
+                playSound('open');
+            }, 1000);
+        }
+        
+        function showSurpriseMessage() {
+            const surprisesDiv = document.getElementById('openedSurprises');
+            surprisesDiv.innerHTML = `
+                <div class="surprise-message show">
+                    <div class="message-icon">🎁</div>
+                    <div class="message-content">
+                        <h4>WOW! Hadiah Terbuka!</h4>
+                        <p>Kamu mendapatkan akses ke semua kejutan spesial!</p>
+                        <p><strong>🎉 SELAMAT! 🎉</strong></p>
+                    </div>
+                </div>
+            `;
+            
+            // Enable all surprise cards
+            document.querySelectorAll('.surprise-card').forEach(card => {
+                card.classList.add('unlocked');
+            });
+        }
+        
+        function openSurprise(type) {
+            const modal = document.getElementById('surpriseModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            let content = '';
+            
+            switch(type) {
+                case 'message':
+                    modalTitle.textContent = '💌 Surat Rahasia';
+                    content = `
+                        <div class="secret-letter">
+                            <div class="letter-header">
+                                <i class="fas fa-heart"></i> Untukmu di Hari Spesialmu <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="letter-content">
+                                <p>Hari ini adalah harimu yang istimewa...</p>
+                                <p>Semoga setiap harimu dipenuhi dengan:</p>
+                                <ul>
+                                    <li>🤗 Kebahagiaan yang tak terhingga</li>
+                                    <li>✨ Impian yang menjadi kenyataan</li>
+                                    <li>❤️ Cinta dari orang-orang terdekat</li>
+                                    <li>🎯 Kesuksesan dalam segala hal</li>
+                                </ul>
+                                <p class="letter-signature">Dengan penuh kasih sayang,<br><strong>Someone Special</strong></p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'memory':
+                    modalTitle.textContent = '📸 Kenangan Indah';
+                    content = `
+                        <div class="memory-album">
+                            <div class="album-cover">
+                                <i class="fas fa-images"></i>
+                                <h4>Album Kenangan</h4>
+                            </div>
+                            <div class="memory-grid">
+                                <div class="memory-item">
+                                    <div class="memory-icon">😄</div>
+                                    <p>Tawa Bahagia</p>
+                                </div>
+                                <div class="memory-item">
+                                    <div class="memory-icon">🎉</div>
+                                    <p>Momen Pesta</p>
+                                </div>
+                                <div class="memory-item">
+                                    <div class="memory-icon">🤗</div>
+                                    <p>Pelukan Hangat</p>
+                                </div>
+                                <div class="memory-item">
+                                    <div class="memory-icon">✨</div>
+                                    <p>Detik-detik Indah</p>
+                                </div>
+                            </div>
+                            <p class="album-note">Semua kenangan ini akan selalu abadi di hati!</p>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'wish':
+                    modalTitle.textContent = '⭐ 3 Permohonan Ajaib';
+                    content = `
+                        <div class="wish-grant">
+                            <div class="wish-intro">
+                                <p>Hari ini kamu mendapatkan <strong>3 PERMOHONAN KHUSUS</strong> yang akan dikabulkan!</p>
+                            </div>
+                            <div class="wishes-list">
+                                <div class="wish-item">
+                                    <div class="wish-number">1</div>
+                                    <div class="wish-content">
+                                        <input type="text" class="wish-input" placeholder="Tulis permohonan pertama...">
+                                        <button class="wish-btn" onclick="grantWish(1)">Kabulkan!</button>
+                                    </div>
+                                </div>
+                                <div class="wish-item">
+                                    <div class="wish-number">2</div>
+                                    <div class="wish-content">
+                                        <input type="text" class="wish-input" placeholder="Tulis permohonan kedua...">
+                                        <button class="wish-btn" onclick="grantWish(2)">Kabulkan!</button>
+                                    </div>
+                                </div>
+                                <div class="wish-item">
+                                    <div class="wish-number">3</div>
+                                    <div class="wish-content">
+                                        <input type="text" class="wish-input" placeholder="Tulis permohonan ketiga...">
+                                        <button class="wish-btn" onclick="grantWish(3)">Kabulkan!</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wish-note">
+                                <i class="fas fa-magic"></i> Permohonanmu akan terkabul dalam waktu dekat!
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            modalBody.innerHTML = content;
+            modal.classList.add('show');
+            
+            // More confetti!
+            createConfetti(100);
+        }
+        
+        function grantWish(number) {
+            const input = document.querySelector(`.wish-item:nth-child(${number}) .wish-input`);
+            if (input.value.trim()) {
+                alert(`✨ Permohonan #${number} dikabulkan: "${input.value}"`);
+                input.disabled = true;
+                input.style.background = '#e8f5e9';
+                
+                const btn = document.querySelector(`.wish-item:nth-child(${number}) .wish-btn`);
+                btn.innerHTML = '<i class="fas fa-check"></i> Terkabul!';
+                btn.disabled = true;
+                btn.style.background = '#4CAF50';
+                
+                createConfetti(50);
+            } else {
+                alert('Tulis permohonanmu dulu!');
+            }
+        }
+        
+        function closeSurpriseModal() {
+            document.getElementById('surpriseModal').classList.remove('show');
+        }
+        
+        function playSound(type) {
+            // Simple sound effect
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = type === 'open' ? 800 : 600;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 1);
+        }
+        
+        // Disable zoom
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('touchmove', function(e) {
+            if(e.scale !== 1) e.preventDefault();
+        }, { passive: false });
+    </script>
+</body>
+</html>
