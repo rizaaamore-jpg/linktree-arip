@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🎂 Happy Birthday! - Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles untuk halaman home */
+        .home-page {
+            background: linear-gradient(135deg, #fff0f8 0%, #f0f8ff 100%);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .birthday-title {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ff6bcb, #6bcbff, #ffde59);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+            animation: titleGlow 2s infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(255, 107, 203, 0.5)); }
+            100% { filter: drop-shadow(0 0 20px rgba(107, 203, 255, 0.7)); }
+        }
+    </style>
+</head>
+<body class="home-page">
+    <!-- Background Elements -->
+    <div class="background-animation">
+        <div class="floating-element" style="top:10%; left:5%; animation-delay:0s;">🎈</div>
+        <div class="floating-element" style="top:20%; right:10%; animation-delay:1s;">🎁</div>
+        <div class="floating-element" style="bottom:20%; left:15%; animation-delay:2s;">✨</div>
+        <div class="floating-element" style="bottom:10%; right:5%; animation-delay:3s;">🎉</div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="page-nav">
+        <div class="nav-indicator">
+            <div class="indicator-dot active" data-page="home"></div>
+            <div class="indicator-dot" data-page="surprise"></div>
+            <div class="indicator-dot" data-page="wishes"></div>
+            <div class="indicator-dot" data-page="gallery"></div>
+            <div class="indicator-dot" data-page="party"></div>
+        </div>
+        
+        <div class="nav-controls">
+            <button class="nav-btn prev-btn disabled">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="page-counter">Page 1 of 5</span>
+            <button class="nav-btn next-btn" onclick="goToPage('surprise.html')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="page-content">
+        <div class="hero-container">
+            <div class="birthday-header">
+                <h1 class="birthday-title">HAPPY BIRTHDAY!</h1>
+                <div class="birthday-subtitle">
+                    Untuk <span class="highlight-name" contenteditable="true">Seseorang</span>
+                </div>
+            </div>
+            
+            <div class="animated-cake">
+                <div class="cake-container">
+                    <div class="cake">
+                        <div class="cake-layer bottom"></div>
+                        <div class="cake-layer middle"></div>
+                        <div class="cake-layer top"></div>
+                        <div class="icing"></div>
+                        
+                        <div class="candles">
+                            <div class="candle" style="--i:1">
+                                <div class="flame"></div>
+                                <div class="candle-body"></div>
+                            </div>
+                            <div class="candle" style="--i:2">
+                                <div class="flame"></div>
+                                <div class="candle-body"></div>
+                            </div>
+                            <div class="candle" style="--i:3">
+                                <div class="flame"></div>
+                                <div class="candle-body"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="sprinkles">
+                            <div class="sprinkle" style="--color:#ff6bcb"></div>
+                            <div class="sprinkle" style="--color:#6bcbff"></div>
+                            <div class="sprinkle" style="--color:#ffde59"></div>
+                            <div class="sprinkle" style="--color:#b56bff"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cake-shadow"></div>
+            </div>
+            
+            <div class="birthday-message">
+                <p class="message-text">
+                    🎉 <strong>Selamat ulang tahun yang ke-17!</strong> 🎂
+                </p>
+                <p class="message-subtext">
+                    Hari ini adalah hari spesialmu!<br>
+                    Semoga semua impian dan harapanmu terkabul!
+                </p>
+            </div>
+            
+            <div class="interactive-buttons">
+                <button class="action-btn btn-sparkle" onclick="playBirthdaySong()">
+                    <i class="fas fa-play-circle"></i> Putar Lagu
+                </button>
+                <button class="action-btn btn-confetti" onclick="createConfetti()">
+                    <i class="fas fa-birthday-cake"></i> Buat Confetti!
+                </button>
+                <button class="action-btn btn-next" onclick="goToPage('surprise.html')">
+                    Lanjut ke Kejutan! <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <div class="birthday-countdown">
+                <h3><i class="fas fa-clock"></i> Hitung Mundur Pesta:</h3>
+                <div class="countdown-timer">
+                    <div class="time-unit">
+                        <span class="time-value" id="cd-hours">12</span>
+                        <span class="time-label">Jam</span>
+                    </div>
+                    <div class="time-separator">:</div>
+                    <div class="time-unit">
+                        <span class="time-value" id="cd-minutes">45</span>
+                        <span class="time-label">Menit</span>
+                    </div>
+                    <div class="time-separator">:</div>
+                    <div class="time-unit">
+                        <span class="time-value" id="cd-seconds">30</span>
+                        <span class="time-label">Detik</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Audio -->
+    <audio id="birthdayAudio" preload="auto">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-to-you-443.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Script -->
+    <script src="script.js"></script>
+    <script>
+        // Fungsi untuk halaman home
+        function playBirthdaySong() {
+            const audio = document.getElementById('birthdayAudio');
+            const btn = event.target.closest('.action-btn');
+            
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = '<i class="fas fa-pause-circle"></i> Pause Lagu';
+                btn.classList.add('playing');
+            } else {
+                audio.pause();
+                btn.innerHTML = '<i class="fas fa-play-circle"></i> Putar Lagu';
+                btn.classList.remove('playing');
+            }
+        }
+        
+        // Countdown timer
+        function updateCountdown() {
+            const target = new Date();
+            target.setHours(20, 0, 0, 0); // Target jam 8 malam
+            
+            const now = new Date();
+            const diff = target - now;
+            
+            if (diff > 0) {
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('cd-hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('cd-minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('cd-seconds').textContent = seconds.toString().padStart(2, '0');
+            } else {
+                document.querySelector('.countdown-timer').innerHTML = 
+                    '<div class="party-time">🎉 WAKTU PESTA! 🎉</div>';
+            }
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Editable name effect
+        const nameElement = document.querySelector('.highlight-name');
+        nameElement.addEventListener('click', function() {
+            this.focus();
+        });
+        
+        nameElement.addEventListener('blur', function() {
+            if (this.textContent.trim() === '') {
+                this.textContent = 'Arip;
+            }
+        });
+        
+        // Disable zoom
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('touchmove', function(e) {
+            if(e.scale !== 1) e.preventDefault();
+        }, { passive: false });
+        
+        // Prevent context menu
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
