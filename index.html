@@ -2,312 +2,92 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 PORTFOLIO - MUHAMMAD ARIF SUYUTI</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🎂 Loading Birthday Surprise...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff6bcb 0%, #6bcbff 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        
+        .loading-container {
+            text-align: center;
+            color: white;
+        }
+        
+        .cake {
+            font-size: 5rem;
+            animation: bounce 1s infinite alternate;
+            margin-bottom: 20px;
+        }
+        
+        .loading-text {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .loader {
+            width: 200px;
+            height: 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 5px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        .loader-bar {
+            width: 0%;
+            height: 100%;
+            background: white;
+            border-radius: 5px;
+            animation: loading 2s ease-in-out forwards;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+    </style>
+    <script>
+        // Redirect ke halaman home setelah loading
+        setTimeout(() => {
+            window.location.href = "home.html";
+        }, 2000);
+        
+        // Disable zoom
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('touchmove', function(e) {
+            if(e.scale !== 1) e.preventDefault();
+        }, { passive: false });
+    </script>
 </head>
 <body>
-    <!-- Floating Particles -->
-    <div class="particles"></div>
-    
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="logo">🚀 <span class="logo-text">PORTFOLIO</span></div>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#skills">Skills</a>
-            <a href="#contact" class="cta-button">Contact</a>
+    <div class="loading-container">
+        <div class="cake">🎂</div>
+        <div class="loading-text">Loading Birthday Surprise...</div>
+        <div class="loader">
+            <div class="loader-bar"></div>
         </div>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="badge">👋 HALO, SAYA</div>
-            <h1 class="typing-text">Muhammad Arif Suyuti</h1>
-            <h2 class="subtitle">
-                <span class="highlight">Full Stack Developer</span> & 
-                <span class="highlight">UI/UX Designer</span>
-            </h2>
-            <p class="description">
-                Saya membuat website yang cepat, indah, dan fungsional. 
-                Passionate tentang coding clean dan user experience yang luar biasa.
-            </p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn primary">
-                    <i class="fas fa-rocket"></i> Lihat Projects
-                </a>
-                <a href="resume.pdf" download class="btn secondary">
-                    <i class="fas fa-download"></i> Download CV
-                </a>
-            </div>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-            </div>
-        </div>
-        <div class="hero-image">
-            <div class="floating-card">
-                <img src="images/avatar.jpg" alt="Foto Profil" class="avatar">
-                <div class="card-glow"></div>
-            </div>
-            <div class="tech-stack">
-                <span class="tech-item">⚡ React</span>
-                <span class="tech-item">🎨 Figma</span>
-                <span class="tech-item">🚀 Next.js</span>
-                <span class="tech-item">💻 Node.js</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <h2 class="section-title">Tentang <span class="gradient-text">Saya</span></h2>
-        <div class="about-content">
-            <div class="about-text">
-                <h3>🎯 Passionate Developer</h3>
-                <p>
-                    Dengan pengalaman 3+ tahun di industri teknologi, saya telah 
-                    mengembangkan berbagai aplikasi web modern untuk klien dari 
-                    startup hingga enterprise.
-                </p>
-                <div class="stats">
-                    <div class="stat">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">Projects Selesai</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">30+</div>
-                        <div class="stat-label">Klien Puas</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Kepuasan</div>
-                    </div>
-                </div>
-            </div>
-            <div class="about-features">
-                <div class="feature">
-                    <div class="feature-icon">💻</div>
-                    <h4>Web Development</h4>
-                    <p>Membangun website responsif & aplikasi web modern</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🎨</div>
-                    <h4>UI/UX Design</h4>
-                    <p>Desain user interface yang intuitive dan beautiful</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">📱</div>
-                    <h4>Mobile Apps</h4>
-                    <p>Pengembangan aplikasi mobile cross-platform</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <h2 class="section-title">Project <span class="gradient-text">Terbaru</span></h2>
-        <div class="projects-grid">
-            <!-- Project 1 -->
-            <div class="project-card">
-                <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    <div class="project-overlay">
-                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                        <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3>E-Commerce Platform</h3>
-                    <p>Platform e-commerce modern dengan payment gateway dan admin dashboard.</p>
-                    <div class="project-tags">
-                        <span>React</span>
-                        <span>Node.js</span>
-                        <span>MongoDB</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="project-card">
-                <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                    <div class="project-overlay">
-                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                        <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3>Task Management App</h3>
-                    <p>Aplikasi manajemen tugas dengan kolaborasi real-time team.</p>
-                    <div class="project-tags">
-                        <span>Next.js</span>
-                        <span>Socket.io</span>
-                        <span>Tailwind</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="project-card">
-                <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                    <div class="project-overlay">
-                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                        <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3>Portfolio Website</h3>
-                    <p>Website portfolio modern dengan dark mode dan animasi smooth.</p>
-                    <div class="project-tags">
-                        <span>HTML/CSS</span>
-                        <span>JavaScript</span>
-                        <span>GSAP</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <h2 class="section-title">Keahlian <span class="gradient-text">Saya</span></h2>
-        <div class="skills-container">
-            <div class="skill-category">
-                <h3>Frontend</h3>
-                <div class="skill">
-                    <span>HTML/CSS</span>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 95%"></div>
-                    </div>
-                </div>
-                <div class="skill">
-                    <span>JavaScript</span>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 90%"></div>
-                    </div>
-                </div>
-                <div class="skill">
-                    <span>React</span>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 88%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3>Backend</h3>
-                <div class="skill">
-                    <span>Node.js</span>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill">
-                    <span>Python</span>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 80%"></div>
-                    </div>
-                </div>
-                <div class="skill">
-                    <span>Database</span>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 75%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3>Tools</h3>
-                <div class="skill">
-                    <span>Git</span>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 90%"></div>
-                    </div>
-                </div>
-                <div class="skill">
-                    <span>Figma</span>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill">
-                    <span>VS Code</span>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 95%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <h2 class="section-title">Hubungi <span class="gradient-text">Saya</span></h2>
-        <div class="contact-container">
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <h4>Email</h4>
-                        <p>arifsuyuti3@gmail.com</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <div>
-                        <h4>Telepon</h4>
-                        <p>+62 819 3299 9602</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <h4>Lokasi</h4>
-                        <p>Jakarta, Indonesia</p>
-                    </div>
-                </div>
-            </div>
-            
-            <form class="contact-form" id="contactForm">
-                <input type="text" placeholder="Nama Anda" required>
-                <input type="email" placeholder="Email Anda" required>
-                <textarea placeholder="Pesan Anda" rows="5" required></textarea>
-                <button type="submit" class="btn primary">
-                    <i class="fas fa-paper-plane"></i> Kirim Pesan
-                </button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="logo">🚀 <span class="logo-text">PORTFOLIO</span></div>
-            <p>Dibuat dengan menggunakan HTML, CSS, dan JavaScript</p>
-            <div class="footer-links">
-                <a href="#home">Home</a> • 
-                <a href="#about">About</a> • 
-                <a href="#projects">Projects</a> • 
-                <a href="#contact">Contact</a>
-            </div>
-            <p class="copyright">© 2024 Muhammad Arif Suyuti. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Back to Top -->
-    <button class="back-to-top" onclick="scrollToTop()">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <script src="script.js"></script>
+    </div>
 </body>
-                    </html>
+</html>
