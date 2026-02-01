@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📸 Birthday Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .gallery-page {
+            background: linear-gradient(135deg, #fff0f8 0%, #f0f8ff 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease;
+        }
+        
+        .gallery-title {
+            text-align: center;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #ff6bcb, #6bcbff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .gallery-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body class="gallery-page">
+    <!-- Navigation -->
+    <nav class="page-nav">
+        <div class="nav-indicator">
+            <div class="indicator-dot" data-page="home" onclick="goToPage('home.html')"></div>
+            <div class="indicator-dot" data-page="surprise" onclick="goToPage('surprise.html')"></div>
+            <div class="indicator-dot" data-page="wishes" onclick="goToPage('wishes.html')"></div>
+            <div class="indicator-dot active" data-page="gallery"></div>
+            <div class="indicator-dot" data-page="party" onclick="goToPage('party.html')"></div>
+        </div>
+        
+        <div class="nav-controls">
+            <button class="nav-btn prev-btn" onclick="goToPage('wishes.html')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="page-counter">Page 4 of 5</span>
+            <button class="nav-btn next-btn" onclick="goToPage('party.html')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="page-content">
+        <div class="gallery-container">
+            <h1 class="gallery-title">
+                <i class="fas fa-images"></i> GALERI KENANGAN <i class="fas fa-images"></i>
+            </h1>
+            <p class="gallery-subtitle">Koleksi momen indah yang tak terlupakan!</p>
+            
+            <div class="gallery-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-camera"></i> Foto-Foto Spesial</h3>
+                    <p class="section-desc">Geser untuk melihat lebih banyak foto</p>
+                </div>
+                
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- Photos will be loaded here -->
+                </div>
+                
+                <div class="gallery-controls">
+                    <button class="gallery-btn" onclick="prevPhoto()">
+                        <i class="fas fa-chevron-left"></i> Sebelumnya
+                    </button>
+                    <span class="photo-counter">Foto <span id="currentPhoto">1</span> dari <span id="totalPhotos">6</span></span>
+                    <button class="gallery-btn" onclick="nextPhoto()">
+                        Selanjutnya <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="memory-timeline-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-history"></i> Timeline Kenangan</h3>
+                    <p class="section-desc">Perjalanan indah kita bersama</p>
+                </div>
+                
+                <div class="timeline-container">
+                    <div class="timeline" id="timeline">
+                        <!-- Timeline items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="memory-quotes">
+                <div class="quote-card">
+                    <div class="quote-icon">💭</div>
+                    <div class="quote-content">
+                        <p>"Kenangan indah adalah hadiah terbaik yang bisa kita berikan pada diri sendiri."</p>
+                        <div class="quote-author">- Birthday Wisdom -</div>
+                    </div>
+                </div>
+                
+                <button class="add-memory-btn" onclick="addNewMemory()">
+                    <i class="fas fa-plus-circle"></i> Tambah Kenangan Baru
+                </button>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Memory Modal -->
+    <div class="memory-modal" id="memoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus"></i> Tambah Kenangan Baru</h3>
+                <button class="close-btn" onclick="closeMemoryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="memory-form">
+                    <div class="form-group">
+                        <label for="memoryTitle"><i class="fas fa-heading"></i> Judul Kenangan</label>
+                        <input type="text" id="memoryTitle" placeholder="Contoh: Pesta Ulang Tahun 2023">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memoryYear"><i class="fas fa-calendar"></i> Tahun</label>
+                        <input type="number" id="memoryYear" min="2000" max="2024" value="2024">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memoryDesc"><i class="fas fa-align-left"></i> Deskripsi</label>
+                        <textarea id="memoryDesc" placeholder="Ceritakan kenangan indah ini..." rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-image"></i> Pilih Icon</label>
+                        <div class="icon-selector">
+                            <label class="icon-option">
+                                <input type="radio" name="memoryIcon" value="🎂" checked>
+                                <span class="icon-display">🎂</span>
+                            </label>
+                            <label class="icon-option">
+                                <input type="radio" name="memoryIcon" value="🎉">
+                                <span class="icon-display">🎉</span>
+                            </label>
+                            <label class="icon-option">
+                                <input type="radio" name="memoryIcon" value="❤️">
+                                <span class="icon-display">❤️</span>
+                            </label>
+                            <label class="icon-option">
+                                <input type="radio" name="memoryIcon" value="✨">
+                                <span class="icon-display">✨</span>
+                            </label>
+                            <label class="icon-option">
+                                <input type="radio" name="memoryIcon" value="🥳">
+                                <span class="icon-display">🥳</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" onclick="closeMemoryModal()">
+                    <i class="fas fa-times"></i> Batal
+                </button>
+                <button class="modal-btn primary" onclick="saveMemory()">
+                    <i class="fas fa-save"></i> Simpan Kenangan
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="confetti.js"></script>
+    <script>
+        // Gallery variables
+        let currentPhotoIndex = 0;
+        const photos = [
+            {
+                src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                caption: 'Birthday Celebration! 🎉',
+                year: '2023'
+            },
+            {
+                src: 'https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                caption: 'Cake Time! 🎂',
+                year: '2022'
+            },
+            {
+                src: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                caption: 'Fun Moments 😄',
+                year: '2021'
+            },
+            {
+                src: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                caption: 'Gifts Galore! 🎁',
+                year: '2020'
+            },
+            {
+                src: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                caption: 'Party Time! 🥳',
+                year: '2019'
+            },
+            {
+                src: 'https://images.unsplash.com/photo-1533912352517-92e6a1e4d3a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                caption: 'Memories ❤️',
+                year: '2018'
+            }
+        ];
+        
+        // Timeline data
+        const timelineData = [
+            { year: '2018', title: 'Pertama Bertemu', description: 'Momen pertama kita bertemu', icon: '👋' },
+            { year: '2019', title: 'Liburan Bersama', description: 'Petualangan tak terlupakan', icon: '🏖️' },
+            { year: '2020', title: 'Pesta Kejutan', description: 'Surprise party yang sukses', icon: '🎊' },
+            { year: '2021', title: 'Pencapaian Besar', description: 'Mencapai goals bersama', icon: '🏆' },
+            { year: '2022', title: 'Momen Spesial', description: 'Hari-hari berharga', icon: '💫' },
+            { year: '2023', title: 'Adventure Time', description: 'Eksplorasi baru bersama', icon: '🧭' },
+            { year: '2024', title: 'Birthday Special!', description: 'Hari spesialmu!', icon: '🎂' }
+        ];
+        
+        // Initialize gallery
+        function initGallery() {
+            loadGalleryPhotos();
+            loadTimeline();
+            updatePhotoCounter();
+            
+            // Add swipe support
+            setupSwipeSupport();
+        }
+        
+        function loadGalleryPhotos() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            if (!galleryGrid) return;
+            
+            galleryGrid.innerHTML = '';
+            photos.forEach((photo, index) => {
+                const photoElement = document.createElement('div');
+                photoElement.className = 'gallery-photo';
+                photoElement.style.display = index === 0 ? 'block' : 'none';
+                photoElement.innerHTML = `
+                    <div class="photo-card">
+                        <div class="photo-frame">
+                            <img src="${photo.src}" 
+                                 alt="${photo.caption}"
+                                 onerror="this.onerror=null; this.src='https://via.placeholder.com/500x300/ff6bcb/ffffff?text=Birthday+Photo'">
+                            <div class="photo-overlay">
+                                <div class="photo-year">${photo.year}</div>
+                                <button class="photo-action" onclick="likePhoto(${index})">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="photo-info">
+                            <h4>${photo.caption}</h4>
+                            <div class="photo-likes" id="likes-${index}">0 likes</div>
+                        </div>
+                    </div>
+                `;
+                galleryGrid.appendChild(photoElement);
+            });
+            
+            document.getElementById('totalPhotos').textContent = photos.length;
+        }
+        
+        function loadTimeline() {
+            const timeline = document.getElementById('timeline');
+            if (!timeline) return;
+            
+            // Sort by year descending
+            const sortedData = [...timelineData].sort((a, b) => b.year - a.year);
+            
+            timeline.innerHTML = '';
+            sortedData.forEach((item, index) => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                timelineItem.style.animationDelay = `${index * 0.1}s`;
+                timelineItem.innerHTML = `
+                    <div class="timeline-marker">
+                        <div class="marker-icon">${item.icon}</div>
+                        <div class="marker-line"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">${item.year}</div>
+                        <h4>${item.title}</h4>
+                        <p>${item.description}</p>
+                    </div>
+                `;
+                timeline.appendChild(timelineItem);
+            });
+        }
+        
+        function nextPhoto() {
+            if (currentPhotoIndex < photos.length - 1) {
+                const currentPhoto = document.querySelectorAll('.gallery-photo')[currentPhotoIndex];
+                const nextPhoto = document.querySelectorAll('.gallery-photo')[currentPhotoIndex + 1];
+                
+                currentPhoto.style.animation = 'slideOutLeft 0.5s ease forwards';
+                nextPhoto.style.display = 'block';
+                nextPhoto.style.animation = 'slideInRight 0.5s ease forwards';
+                
+                currentPhotoIndex++;
+                updatePhotoCounter();
+            }
+        }
+        
+        function prevPhoto() {
+            if (currentPhotoIndex > 0) {
+                const currentPhoto = document.querySelectorAll('.gallery-photo')[currentPhotoIndex];
+                const prevPhoto = document.querySelectorAll('.gallery-photo')[currentPhotoIndex - 1];
+                
+                currentPhoto.style.animation = 'slideOutRight 0.5s ease forwards';
+                prevPhoto.style.display = 'block';
+                prevPhoto.style.animation = 'slideInLeft 0.5s ease forwards';
+                
+                currentPhotoIndex--;
+                updatePhotoCounter();
+            }
+        }
+        
+        function updatePhotoCounter() {
+            document.getElementById('currentPhoto').textContent = currentPhotoIndex + 1;
+        }
+        
+        function likePhoto(index) {
+            const likesElement = document.getElementById(`likes-${index}`);
+            const heartIcon = document.querySelector(`#likes-${index}`).parentElement.parentElement.querySelector('.fa-heart');
+            
+            // Get current likes from localStorage
+            let photoLikes = JSON.parse(localStorage.getItem('photoLikes') || '{}');
+            const currentLikes = photoLikes[index] || 0;
+            
+            // Update likes
+            photoLikes[index] = currentLikes + 1;
+            localStorage.setItem('photoLikes', JSON.stringify(photoLikes));
+            
+            // Update display
+            likesElement.textContent = `${photoLikes[index]} likes`;
+            
+            // Change heart icon
+            heartIcon.classList.remove('far');
+            heartIcon.classList.add('fas');
+            heartIcon.style.color = '#ff6bcb';
+            
+            // Add animation
+            heartIcon.style.animation = 'bounce 0.5s ease';
+            setTimeout(() => {
+                heartIcon.style.animation = '';
+            }, 500);
+            
+            // Create mini confetti
+            createConfetti(10);
+        }
+        
+        function setupSwipeSupport() {
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            document.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            document.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleGallerySwipe();
+            });
+            
+            function handleGallerySwipe() {
+                const swipeThreshold = 50;
+                const swipeDistance = touchEndX - touchStartX;
+                
+                if (Math.abs(swipeDistance) > swipeThreshold) {
+                    if (swipeDistance > 0) {
+                        // Swipe right - previous photo
+                        prevPhoto();
+                    } else {
+                        // Swipe left - next photo
+                        nextPhoto();
+                    }
+                }
+            }
+        }
+        
+        function addNewMemory() {
+            document.getElementById('memoryModal').style.display = 'flex';
+        }
+        
+        function closeMemoryModal() {
+            document.getElementById('memoryModal').style.display = 'none';
+        }
+        
+        function saveMemory() {
+            const title = document.getElementById('memoryTitle').value;
+            const year = document.getElementById('memoryYear').value;
+            const description = document.getElementById('memoryDesc').value;
+            const icon = document.querySelector('input[name="memoryIcon"]:checked').value;
+            
+            if (!title || !description) {
+                alert('Harap isi semua field!');
+                return;
+            }
+            
+            // Add to timeline
+            timelineData.unshift({
+                year: year,
+                title: title,
+                description: description,
+                icon: icon
+            });
+            
+            // Reload timeline
+            loadTimeline();
+            
+            // Show success message
+            alert('Kenangan berhasil disimpan!');
+            
+            // Close modal
+            closeMemoryModal();
+            
+            // Clear form
+            document.getElementById('memoryTitle').value = '';
+            document.getElementById('memoryDesc').value = '';
+            
+            // Create confetti
+            createConfetti(50);
+        }
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOutLeft {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(-100%); opacity: 0; }
+            }
+            
+            @keyframes slideInLeft {
+                from { transform: translateX(-100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            
+            .gallery-photo {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .photo-card {
+                background: white;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            
+            .photo-frame {
+                position: relative;
+                height: 300px;
+                overflow: hidden;
+            }
+            
+            .photo-frame img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .photo-overlay {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+                padding: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .photo-year {
+                color: white;
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
+            
+            .photo-action {
+                background: rgba(255,255,255,0.2);
+                border: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                color: white;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+                backdrop-filter: blur(10px);
+            }
+            
+            .photo-info {
+                padding: 15px;
+            }
+            
+            .photo-info h4 {
+                margin-bottom: 5px;
+                color: #333;
+            }
+            
+            .photo-likes {
+                color: #666;
+                font-size: 0.9rem;
+            }
+            
+            .gallery-controls {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 20px;
+                padding: 15px;
+                background: white;
+                border-radius: 15px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            
+            .gallery-btn {
+                padding: 10px 20px;
+                background: linear-gradient(45deg, #ff6bcb, #6bcbff);
+                color: white;
+                border: none;
+                border-radius: 25px;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .photo-counter {
+                font-weight: 600;
+                color: #333;
+            }
+            
+            .timeline-container {
+                position: relative;
+                padding: 20px 0;
+            }
+            
+            .timeline {
+                position: relative;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            
+            .timeline-item {
+                display: flex;
+                margin-bottom: 30px;
+                animation: fadeIn 0.5s ease backwards;
+            }
+            
+            .timeline-marker {
+                position: relative;
+                width: 60px;
+                flex-shrink: 0;
+            }
+            
+            .marker-icon {
+                width: 50px;
+                height: 50px;
+                background: linear-gradient(45deg, #ff6bcb, #6bcbff);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                color: white;
+                z-index: 2;
+                position: relative;
+            }
+            
+            .marker-line {
+                position: absolute;
+                top: 50px;
+                left: 24px;
+                width: 2px;
+                height: calc(100% + 30px);
+                background: #ff6bcb;
+            }
+            
+            .timeline-item:last-child .marker-line {
+                display: none;
+            }
+            
+            .timeline-content {
+                flex: 1;
+                padding-left: 20px;
+                padding-top: 5px;
+            }
+            
+            .timeline-year {
+                color: #ff6bcb;
+                font-weight: 700;
+                font-size: 1.1rem;
+                margin-bottom: 5px;
+            }
+            
+            .timeline-content h4 {
+                margin-bottom: 5px;
+                color: #333;
+            }
+            
+            .timeline-content p {
+                color: #666;
+                font-size: 0.9rem;
+            }
+            
+            .memory-quotes {
+                margin-top: 40px;
+                text-align: center;
+            }
+            
+            .quote-card {
+                background: linear-gradient(45deg, #ff6bcb, #6bcbff);
+                color: white;
+                padding: 30px;
+                border-radius: 20px;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                text-align: left;
+            }
+            
+            .quote-icon {
+                font-size: 3rem;
+                flex-shrink: 0;
+            }
+            
+            .quote-content p {
+                font-size: 1.2rem;
+                font-style: italic;
+                margin-bottom: 10px;
+            }
+            
+            .quote-author {
+                opacity: 0.9;
+                font-size: 0.9rem;
+            }
+            
+            .add-memory-btn {
+                padding: 15px 30px;
+                background: linear-gradient(45deg, #ffde59, #5bff6b);
+                color: #333;
+                border: none;
+                border-radius: 25px;
+                font-weight: 600;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 1.1rem;
+            }
+            
+            .memory-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                justify-content: center;
+                align-items: center;
+                z-index: 2000;
+            }
+            
+            .memory-modal .modal-content {
+                background: white;
+                border-radius: 20px;
+                width: 90%;
+                max-width: 500px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            
+            .memory-form {
+                padding: 20px;
+            }
+            
+            .icon-selector {
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+            }
+            
+            .icon-option {
+                cursor: pointer;
+            }
+            
+            .icon-option input {
+                display: none;
+            }
+            
+            .icon-display {
+                display: block;
+                width: 40px;
+                height: 40px;
+                background: #f0f0f0;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                transition: all 0.3s ease;
+            }
+            
+            .icon-option input:checked + .icon-display {
+                background: #ff6bcb;
+                color: white;
+                transform: scale(1.1);
+            }
+            
+            .modal-footer {
+                padding: 15px 20px;
+                border-top: 2px solid #f0f0f0;
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+            }
+            
+            .modal-btn {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 20px;
+                font-weight: 600;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .modal-btn.secondary {
+                background: #f0f0f0;
+                color: #333;
+            }
+            
+            .modal-btn.primary {
+                background: linear-gradient(45deg, #ff6bcb, #6bcbff);
+                color: white;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initGallery);
+        
+        // Disable zoom
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('touchmove', function(e) {
+            if(e.scale !== 1) e.preventDefault();
+        }, { passive: false });
+    </script>
+</body>
+</html>
